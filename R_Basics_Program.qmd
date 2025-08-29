@@ -3,8 +3,11 @@ title: "Basic R Programming"
 format: html
 editor: visual
 ---
+ST 558
 
-# Task 1: Basic Vector practice
+Ella Gruchacz
+
+# Task 1: Basic Vector Practice
 
 Create two vectors, one for blood pressure pre treatment and one post treatement.
 ```{r}
@@ -19,7 +22,7 @@ names(pre_bp) <- paste("Subject", 1:20, sep = "_")
 names(post_bp) <- paste("Subject", 1:20, sep = "_")
 ```
 
-Create a vector storing the difference in BP measurement between post treatment and pre treatment.
+Create a vector storing the difference in BP measurement between post treatment and pre treatment, and calculate the average decrease in blood pressure across all patients.
 ```{r}
 bp_diff <- post_bp - pre_bp
 mean(bp_diff)
@@ -30,26 +33,24 @@ which(bp_diff < 0)
 
 ```
 
-Save the difference in BP measurements for subjects that expreienced a postive change.
+Save the difference in BP measurements for subjects that experienced a positive change.
 ```{r}
 bp_dec <- bp_diff[bp_diff < 0]
 ```
 
-Find the average difference in BP for subjects that experienced a postive change.
+Find the average difference in BP for subjects that experienced a positive change.
 ```{r}
 mean(bp_dec)
 ```
-# Task 2: Basic Data Frame practice
+# Task 2: Basic Data Frame Practice
 
-Creare a data frame corresponding to the data patient, pre_bp, post_bp, and diff_bp.
+Create a data frame corresponding to the data patient, pre_bp, post_bp, and diff_bp.
 
 ```{r}
 patients <- names(pre_bp)
-bp_data <- data.frame(patients, pre_bp, post_bp, bp_diff)
-
-test_df <- data.frame(pre_bp, post_bp, bp_diff)
-head(test_df)
+bp_data <- data.frame(patients, pre_bp, post_bp, bp_diff, row.names = NULL)
 ```
+
 Return the rows of the data frame where the diff_bp column is negative.
 ```{r}
 bp_data[bp_data$bp_diff < 0,]
@@ -65,7 +66,7 @@ knitr::kable(bp_data)
 
 ```
 
-# Task 3: List practice
+# Task 3: List Practice
 
 Recreate the last data frame with new data.
 
@@ -85,13 +86,16 @@ exper <- list(treatment = bp_data, placebo = placebo)
 ```
 
 Access the first element in three ways.
+
+* $ operator
 ```{r}
 exper$treatment
 ```
+* Single square brackets []
 ```{r}
 exper[1]
 ```
-
+* Double square brackets [[]]
 ```{r}
 exper[[1]]
 ```
