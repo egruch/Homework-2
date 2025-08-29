@@ -1,0 +1,103 @@
+---
+title: "Basic R Programming"
+format: html
+editor: visual
+---
+
+# Task 1: Basic Vector practice
+
+Create two vectors, one for blood pressure pre treatment and one post treatement.
+```{r}
+pre_bp <- c(120, 151, 125, 126, 115, 132, 132, 129, 134, 139, 127, 122, 127, 135, 133, 128, 147, 138, 140, 132)
+
+post_bp <- c(127, 145, 135, 122, 115, 122, 123, 126, 126, 129, 132, 146, 120, 114, 121, 120, 128, 120, 133, 115)
+```
+
+Assign names to each vector element.
+```{r}
+names(pre_bp) <- paste("Subject", 1:20, sep = "_")
+names(post_bp) <- paste("Subject", 1:20, sep = "_")
+```
+
+Create a vector storing the difference in BP measurement between post treatment and pre treatment.
+```{r}
+bp_diff <- post_bp - pre_bp
+mean(bp_diff)
+```
+Find which subjects had a positive change, their BP was lower after treatment.
+```{r}
+which(bp_diff < 0)
+
+```
+
+Save the difference in BP measurements for subjects that expreienced a postive change.
+```{r}
+bp_dec <- bp_diff[bp_diff < 0]
+```
+
+Find the average difference in BP for subjects that experienced a postive change.
+```{r}
+mean(bp_dec)
+```
+# Task 2: Basic Data Frame practice
+
+Creare a data frame corresponding to the data patient, pre_bp, post_bp, and diff_bp.
+
+```{r}
+patients <- names(pre_bp)
+bp_data <- data.frame(patients, pre_bp, post_bp, bp_diff)
+
+test_df <- data.frame(pre_bp, post_bp, bp_diff)
+head(test_df)
+```
+Return the rows of the data frame where the diff_bp column is negative.
+```{r}
+bp_data[bp_data$bp_diff < 0,]
+```
+Create a new column of the data frame corresponding to TRUE if the post_bp is less than 120 and FALSE if it is not.
+```{r}
+bp_data$less_120 <- bp_data$post_bp < 120
+```
+
+Print the data frame.
+```{r}
+knitr::kable(bp_data)
+
+```
+
+# Task 3: List practice
+
+Recreate the last data frame with new data.
+
+```{r}
+placebo <- data.frame(
+                      patients = paste("Subject", 1:20, sep = "_"), 
+                      pre_trt = c(138, 135, 147, 117, 152, 134, 114, 121, 131, 130),
+                      post_trt = c(105, 136, 123, 130, 134, 143, 135, 139, 120,124))
+placebo$trt_diff <- placebo$post_trt - placebo$pre_trt
+                      
+placebo$less_120 <- placebo$trt_diff < 120
+```
+
+Create a list of two data frames.
+```{r}
+exper <- list(treatment = bp_data, placebo = placebo)
+```
+
+Access the first element in three ways.
+```{r}
+exper$treatment
+```
+```{r}
+exper[1]
+```
+
+```{r}
+exper[[1]]
+```
+
+ In one line of code, access the pre_bp column of the placebo data frame.
+```{r}
+exper$placebo$pre_trt
+```
+
